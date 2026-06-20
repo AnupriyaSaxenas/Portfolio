@@ -29,7 +29,7 @@ function App() {
         <GlobalReach />
         <Contact />
       </main>
-      <SiteFooter />
+      {/* <SiteFooter /> */}
     </>
   );
 }
