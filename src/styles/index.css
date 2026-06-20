@@ -1,0 +1,142 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+/* Manual toggle: dark via data-theme attribute on <html> */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* ── Semantic tokens ──────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --color-bg: #f7f7fb;
+  --color-surface: #ffffff;
+  --color-fg: #1a1730;
+  --color-muted: #565273;
+  --color-subtle: #7a758f;
+  --color-border: #e8e6f2;
+  --color-card: #ffffff;
+  --color-accent: #6d5efc;
+  --color-accent-hover: #5a49f0;
+  --color-accent-soft: #ece9ff;
+  --shadow-soft: 0 1px 2px rgb(26 23 48 / 0.04), 0 8px 24px rgb(26 23 48 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(26 23 48 / 0.06), 0 16px 40px rgb(109 94 252 / 0.12);
+  --blob-1: rgb(185 168 255 / 0.55);
+  --blob-2: rgb(168 216 255 / 0.45);
+  --blob-3: rgb(255 193 224 / 0.45);
+}
+
+[data-theme="dark"] {
+  --color-bg: #0e0c1a;
+  --color-surface: #1a1733;
+  --color-fg: #f0eeff;
+  --color-muted: #a8a3c4;
+  --color-subtle: #7a758f;
+  --color-border: #2d2a4a;
+  --color-card: #1a1733;
+  --color-accent: #9d8fff;
+  --color-accent-hover: #b3a6ff;
+  --color-accent-soft: rgb(157 143 255 / 0.15);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.2), 0 8px 24px rgb(0 0 0 / 0.3);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.25), 0 16px 40px rgb(157 143 255 / 0.2);
+  --blob-1: rgb(109 94 252 / 0.18);
+  --blob-2: rgb(100 180 255 / 0.12);
+  --blob-3: rgb(255 150 200 / 0.12);
+}
+
+/* ── @theme inline — Tailwind emits var() utilities ─ */
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-fg: var(--color-fg);
+  --color-muted: var(--color-muted);
+  --color-subtle: var(--color-subtle);
+  --color-border: var(--color-border);
+  --color-card: var(--color-card);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-soft: var(--color-accent-soft);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+body {
+  margin: 0;
+  background-image:
+    radial-gradient(60rem 50rem at 80% -5%, rgb(168 216 255 / 0.13), transparent 60%),
+    radial-gradient(50rem 50rem at -10% 15%, rgb(255 193 224 / 0.11), transparent 60%);
+  background-attachment: fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Focus visible ────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ── Gradient blobs ───────────────────────────────── */
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+@keyframes blob-drift {
+  0%,
+  100% { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(24px, -32px) scale(1.08); }
+  66%  { transform: translate(-20px, 20px) scale(0.96); }
+}
+
+.blob-animate {
+  animation: blob-drift 16s ease-in-out infinite;
+}
+
+/* ── Hero entrance ────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Scale-in variant for avatar */
+@keyframes fade-up-scale {
+  from { opacity: 0; transform: translateY(12px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-up-scale {
+  opacity: 0;
+  animation: fade-up-scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* ── Reduced motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .blob-animate  { animation: none; }
+  .fade-up       { animation: none; opacity: 1; }
+  .fade-up-scale { animation: none; opacity: 1; }
+}

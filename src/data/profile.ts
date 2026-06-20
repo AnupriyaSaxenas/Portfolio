@@ -1,0 +1,13 @@
+import type { Profile } from './types';
+
+export const profile: Profile = {
+  name: 'Anupriya Saxena',
+  title: 'Engineering Manager',
+  tagline:
+    'Building and scaling cloud-native products with distributed engineering teams across Canada, the US, and Taiwan.',
+  summary:
+    'Engineering Manager with 10+ years of experience building and scaling modern, cloud-native products. Proven people leader known for building trust, driving consistent execution in high-stakes environments, and fostering healthy, engaged teams delivering meaningful customer outcomes.',
+  location: 'Canada',
+  photo: { src: '/headshot.png', alt: 'Anupriya Saxena', width: 400, height: 400 },
+  resumePdf: '/resume.pdf',
+};
