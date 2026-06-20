@@ -6,7 +6,7 @@ import {
   Metrics,
   Overview,
   Principles,
-  SiteFooter,
+  // SiteFooter,
   SiteNav,
   Skills,
 } from './components/sections';
