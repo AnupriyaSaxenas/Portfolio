@@ -44,7 +44,7 @@ export const experience: Role[] = [
   {
     company: 'Deloitte USI',
     title: 'Frontend Engineer · Technology Consultant',
-    location: 'USA',
+    location: 'India',
     period: 'Jun 2017 – Nov 2019',
     highlights: [
       'Led frontend of a Walmart disaster-recovery solution; expansion to Sam\'s Club & pharmacies generated $14M additional business.',
