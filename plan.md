@@ -2,96 +2,120 @@
 
 ## Context
 
-The current portfolio (Vite 8 + React 19 + TS + Tailwind 4) is a single light-theme SPA with five sections (Hero, Metrics, Experience, Skills, Contact). It has duplicated `IntersectionObserver` logic, copy-pasted section chrome, raw color literals via `bg-[var(--color-card)]` arbitrary syntax, placeholder contact details, a footer wrongly nested inside the Contact `<section>`, and **no dark theme**.
-
-The goal is a staff-engineer-quality **rebuild** that matches the structure/aesthetic of the reference profile (kevincychen.com/profile) — a linear, single-page profile with a portrait hero, prose overview, principles, skills, impact, experience, global reach, and a get-in-touch CTA — while being optimized for **performance, reusability, easy content edits, responsiveness, accessibility (WCAG AA), and light + dark theming**. All content is drafted from the user's resume (`AnupriyaSaxena-Resume.docx`, mirrored in `src/data/resume.ts`).
-
-Keep the existing stack — it's the right tool. No router/SSR (a tiny static SPA doesn't need them).
+Rebuilt the portfolio from scratch as a Vite 8 + React 19 + TypeScript + Tailwind 4 static SPA. The site is deployed to GitHub Pages at **https://anupriyasaxenas.github.io/Portfolio/**.
 
 ## Model preference
 
-Default to **Sonnet 4.6** for all implementation work on this project. Switch to Opus only if a task needs capability Sonnet lacks (complex architectural reasoning, hard debugging), and **ask before switching**. The user toggles models with `/model` — Claude cannot switch its own model mid-turn.
+Default to **Sonnet 4.6** for all work on this project. Switch to Opus only if a task needs capability Sonnet lacks, and **ask before switching**.
 
-## Scope (confirmed)
+## Stack
 
-- **Rebuild fresh** — discard the prior uncommitted WIP edits and re-implement the pastel direction properly via tokens.
-- **Dark mode: in scope** — light + dark with a manual `data-theme` toggle (§2).
-- **Core rebuild this pass** — §§1–7 below. **Resume PDF and Vitest tests are deferred to a follow-up** (see "Deferred").
+- Vite 8 + React 19 + TypeScript + Tailwind 4
+- `@fontsource-variable/inter` — self-hosted Inter Variable font
+- Tailwind 4 `@custom-variant dark` with `data-theme` attribute strategy
+- `@theme inline` for CSS-variable-based semantic token utilities
+- No router, no SSR — static SPA
 
-## Confirmed inputs
+## Engineering standards
 
-- **Contact:** personal email `aspriyamail@gmail.com` + LinkedIn `https://www.linkedin.com/in/anupriyasaxena/`. **No GitHub.**
-- **Hero:** real headshot. Use an optimized `<Avatar>`; reference `public/headshot.jpg` (placeholder until the real file is dropped in).
-- **Resume button:** a "View Resume" action wired for a `public/resume.pdf` (the PDF itself is generated in the deferred pass).
-- **Optional sections:** include **all four** — Professional overview, How I work / principles, Global reach, Hiring CTA.
+All code in this project should be written to staff-engineer quality. That means every change must satisfy these bars without being reminded:
 
-## Approach
+### Accessibility (WCAG 2.1 AA)
+- Semantic HTML first — `<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`, `<article>` over generic `<div>`
+- Every interactive element reachable and operable by keyboard alone
+- Focus rings always visible (never `outline: none` without a custom replacement)
+- `SkipLink` present so keyboard/screen-reader users can bypass the nav
+- `aria-label` / `aria-labelledby` on landmark regions and icon-only controls
+- `aria-pressed`, `aria-current`, `aria-hidden` used correctly — no cargo-culting
+- Color contrast ≥ 4.5 : 1 for normal text, ≥ 3 : 1 for large text, against both light and dark themes
+- Images have meaningful `alt` text; decorative images use `alt=""`
+- Motion: all animations respect `prefers-reduced-motion: reduce` — disable or reduce keyframe animations
 
-### 1. Folder structure (final `src/`)
+### Responsiveness
+- Mobile-first — base styles target small screens, breakpoints add complexity upward
+- Layouts tested mentally at 375 px, 768 px, 1024 px, 1440 px
+- No horizontal overflow — no fixed pixel widths wider than the viewport
+- Touch targets ≥ 44 × 44 px
+- Typography scales with viewport — use responsive text size utilities (`text-sm md:text-base` etc.)
+
+### Theming
+- Use only semantic tokens (`text-fg`, `bg-card`, `border-border`, etc.) — never hardcode hex or Tailwind primitive colors in components
+- New UI elements must look correct in both light and dark themes before the change is considered done
+- Shadow and ring values via CSS variables so they flip correctly in dark mode
+
+### Code quality
+- TypeScript strict — no `any`, no non-null assertions without a comment explaining why
+- Props typed explicitly; avoid over-broad `React.FC` generics
+- Components are small and single-purpose; shared primitives live in `components/ui/`
+- Data is static and typed — lives in `data/`, imported into sections; no inline magic strings
+- No dead code, no commented-out experiments left behind
+
+## Theming
+
+- Two-tier token system: primitive palette → semantic tokens in `:root` / `[data-theme="dark"]`
+- Semantic utilities: `bg-bg`, `bg-card`, `text-fg`, `text-muted`, `text-accent`, `border-border`, etc.
+- Manual toggle via `useTheme` hook + `ThemeToggle` button (sun/moon icons, `aria-pressed`)
+- No-FOUC inline script in `index.html` sets `data-theme` before stylesheet loads
+- Light bg: `#f7f7fb` (lavender), dark bg: `#0e0c1a`
+
+## Architecture
+
 ```
-public/
-  fonts/inter-variable.woff2     # self-hosted (replaces Google Fonts <link>)
-  headshot.jpg                   # user-provided portrait (square)
-  resume.pdf                     # generated ≤2-page resume (deferred)
-  favicon.svg                    # existing
-index.html                       # + no-FOUC inline script, color-scheme meta, self-host font
 src/
   main.tsx
-  App.tsx                        # thin composition root: skip link, header, main, footer
-  styles/index.css               # tailwind import, tokens, @custom-variant dark, @theme inline, keyframes
-  lib/cn.ts                      # className joiner
-  hooks/useTheme.ts  useInView.ts
+  App.tsx                   # sticky header, main, footer (commented out)
+  styles/index.css           # tokens, @custom-variant, keyframes, smooth scroll
+  lib/cn.ts
+  hooks/
+    useTheme.ts
+    useInView.ts             # IntersectionObserver + useLayoutEffect for in-viewport reveal
+    useActiveSection.ts      # nav active state via passive scroll + getBoundingClientRect
   components/
-    ui/      Container, Section, SectionHeader, Card, Button, Tag, Icon,
-             Avatar, Blobs, Reveal, ThemeToggle, SkipLink
-    sections/ SiteNav, Hero, Overview, Principles, Skills, Metrics,
-             Experience, GlobalReach, Contact, SiteFooter
+    ui/      Container, Section, SectionHeader, Card, Button/LinkButton,
+             Tag, Icon, Avatar, Blobs, Reveal, ThemeToggle, SkipLink
+    sections/ SiteNav, Hero, Overview, Principles, Metrics, Experience,
+              Skills, GlobalReach, Testimonials, Contact, SiteFooter
   data/      types.ts profile.ts overview.ts principles.ts skills.ts
-             metrics.ts experience.ts global.ts contact.ts nav.ts index.ts
+             metrics.ts experience.ts global.ts contact.ts nav.ts
+             testimonials.ts index.ts
 ```
 
-### 2. Theming — Tailwind 4 light/dark (the linchpin)
-In `src/styles/index.css`:
-- `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));` — switch dark from media-query to a `data-theme` **attribute** strategy (manual toggle, system pref as initial default).
-- **Two token tiers:** primitive palette (raw hex pastel values + dark-side values) → **semantic tokens** (`--color-bg`, `--color-surface`, `--color-fg`, `--color-muted`, `--color-subtle`, `--color-border`, `--color-accent`, `--color-accent-soft`, `--shadow-soft/lift`) defined for `:root`/`[data-theme="light"]` and overridden under `[data-theme="dark"]`.
-- `@theme inline { --color-bg: var(--color-bg); ... }` — **`inline` is essential**: it makes Tailwind emit `var(...)`-referencing utilities (`bg-bg`, `bg-surface`, `text-fg`, `text-muted`, `border-border`, `bg-accent`, `shadow-soft`) that re-resolve on theme switch, instead of freezing build-time values. This also removes the verbose arbitrary-value syntax everywhere.
-- **`useTheme` hook:** `"light"|"dark"`, reads initial from `document.documentElement.dataset.theme`, `setTheme` writes `<html data-theme>` + `localStorage.theme`, tracks `matchMedia` only while no explicit user choice is stored.
-- **No-FOUC:** render-blocking inline script in `index.html <head>` (before stylesheet) sets `data-theme` from `localStorage`/`prefers-color-scheme`. Add `<meta name="color-scheme" content="light dark">` and media-aware `theme-color`.
-- `ThemeToggle`: real `<button>`, `aria-pressed`, dynamic `aria-label`, sun/moon `Icon` (`aria-hidden`), focus-visible ring.
+## Section order (App.tsx)
 
-### 3. Reusable primitives (kill duplication)
-- `Section` + `Container` + `SectionHeader` replace the repeated `px-6 py-24 ... max-w-*` + eyebrow/heading/subhead blocks; `SectionHeader` generates a heading id and `Section` wires `aria-labelledby`.
-- `useInView` hook + `Reveal` wrapper replace the duplicated observers in `Metrics.tsx`/`Experience.tsx`; `Reveal` honors `prefers-reduced-motion` (renders visible immediately) and takes a `delay` for staggered cascades.
-- `Card`, `Button`/`LinkButton` (polymorphic, `primary`/`secondary`), `Tag`, `Icon` (string-literal `IconName` union so data can reference icons without importing components), `Avatar` (explicit width/height → no CLS, `fetchpriority="high"` for the above-fold hero), `Blobs` (extracted decorative cluster, `aria-hidden`, reduced-motion aware).
+SkipLink → sticky `<header>` (SiteNav) → `<main>`: Hero → Overview → Principles → Metrics → Experience → Skills → GlobalReach → Testimonials → Contact → `</main>` → `{/* SiteFooter commented out */}`
 
-### 4. Data model (data-driven, strongly typed, easy edits)
-Split `resume.ts` into the `data/` folder above with a barrel `index.ts`. Keep all types in `types.ts`. Additions:
-- `Profile` gains `overview: string[]`, `photo {src,alt,width,height}`, `resumePdf`.
-- New: `Principle {title, description, icon}`, `GlobalReach {headline, body, regions}`, `Social {platform,label,href,handle}`.
-- **Fix placeholders** → real email + LinkedIn; drop GitHub.
-- New content drafted from resume: `overview.ts` (from SUMMARY), `principles.ts` (3 cornerstones, e.g. healthy high-trust teams / consistent execution & tech-debt discipline / AI-assisted delivery), `global.ts` (Canada · US · Taiwan distributed leadership), Hiring CTA copy in the Contact/dedicated section.
+## Key decisions & UX
 
-### 5. Section composition & order (App.tsx)
-`SkipLink` → `<header>` (`SiteNav` with anchor links + `ThemeToggle`) → `<main id="main">`: Hero → Overview → Principles → Skills → Metrics → Experience → GlobalReach → Contact (with Hiring CTA) → `</main>` → `<footer>` (`SiteFooter`, extracted out of Contact). Exactly one `<h1>` (Hero name); each `Section` has an `<h2>`; role/principle titles are `<h3>`.
+- **Alternating backgrounds:** `bg-card` (white) on Overview / Metrics / Skills / Testimonials / Contact; default `bg-bg` (lavender) on Principles / Experience / GlobalReach. Each white section has `border-b border-border` for a clean edge.
+- **`min-h-screen` on all sections** — prevents the next section's heading from peeking into the viewport.
+- **Sticky header** on `<header>` element (not the inner `<nav>`) so the hamburger dropdown pushes content down rather than overlaying it.
+- **Nav:** pill nav at `lg+`, hamburger + dropdown below `lg`. 8 items: About, How I Work, Impact, Experience, Skills, Global Reach, Testimonials, Contact.
+- **Smooth scroll** via `html { scroll-behavior: smooth }` in CSS.
+- **Hero avatar:** responsive sizes (w-32 → w-80 across breakpoints), gradient ring, `fetchPriority="high"`.
+- **Opaque nav** — `bg-bg` solid, no backdrop blur (user preferred no translucency).
+- **Footer** — commented out in App.tsx, import also commented. Easy to restore.
+- **Contact cards** — `w-fit` grid, `whitespace-nowrap` on handles, external link icon inline next to label (not `ml-auto` floated).
+- **Testimonials carousel** — single-card view with prev/next arrow buttons and pill dot nav. Cards fade in on slide change via `.testimonial-fade` keyframe. 6 real quotes from TrendAI colleagues (managers, peers, reports). Anonymous attribution: role + company only, no names.
+- **`useActiveSection` refactored** — replaced IntersectionObserver approach with a passive scroll listener using `getBoundingClientRect()`. Tracks whichever section's top has passed `NAV_HEIGHT` (120 px), which is more reliable across section sizes.
 
-### 6. Performance
-Self-host Inter variable woff2 (`font-display: swap`, preload) — removes Google Fonts third-party/render-block. Single bundle (no `React.lazy` for ~KB of components). Compositor-only reveal animations (opacity/translate). `Avatar` reserves space (no CLS). Keep `prefers-reduced-motion` guards on blobs + reveals.
+## Content
 
-### 7. Accessibility (WCAG AA)
-Landmarks (`header`/`main`/`footer`), skip link, one `h1` + heading hierarchy, `aria-labelledby` per section, global `:focus-visible` outline using accent, decorative SVGs `aria-hidden`, meaningful icons labelled, external links `rel="noopener noreferrer"` + SR-only "(opens in new tab)". **Contrast fix:** the current `--color-subtle` on light bg is ~2.3:1 (fails) — darken it / restrict to large text; audit accent-on-surface and both themes with a contrast checker.
+- **Company:** TrendAI (rebranded from Trend Micro)
+- **Contact:** `aspriyamail@gmail.com` + `linkedin.com/in/anupriyasaxena`
+- **Headshot:** `public/headshot.png` — path uses `import.meta.env.BASE_URL` for GitHub Pages compatibility
+- **Deloitte location:** India
+- **Overview:** deduplicated — no longer repeats metrics or experience summary verbatim
+- **Skills → Education & Certifications:** B.E. Information Technology (Maharshi Dayanand University), Professional Scrum Master I (PSM I) — AWS cert removed (expired Oct 2025)
 
-### 8. Quality net (this pass)
-Keep `tsc -b` + ESLint as the primary net; add a `typecheck` script. No new test framework this pass.
+## Deployment
 
-## Deferred to a follow-up pass
+- GitHub repo: `https://github.com/AnupriyaSaxenas/Portfolio`
+- GitHub Pages URL: `https://anupriyasaxenas.github.io/Portfolio/`
+- `vite.config.ts` has `base: '/Portfolio/'`
+- Auto-deploys via `.github/workflows/deploy.yml` on every push to `main`
+- Personal GitHub account — independent of employer
 
-- **Resume PDF (≤2 pages):** print-optimized view from the same `data/`, exported to `public/resume.pdf`, linked from the "View Resume" button. The Hero/Contact CTAs are built this pass so the PDF slots in cleanly later (button + `resumePdf` field on `Profile`, even if the file isn't present yet).
-- **Vitest + RTL + jsdom smoke tests:** `useTheme` toggles/persists `data-theme`; `useInView` reveals immediately under reduced-motion; `App` renders all landmarks + exactly one `<h1>`. Plus `test`/`test:run` scripts and optional CI.
+## Deferred
 
-## Verification (this pass)
-1. `npm run dev` — visually confirm all sections render and match the reference's linear profile structure, responsive at mobile/tablet/desktop breakpoints.
-2. Toggle theme — verify instant light↔dark with **no flash on reload** (hard refresh in both stored states); verify system-preference default in a fresh profile.
-3. `npm run build && npm run preview` — confirm production build succeeds; run **Lighthouse** (Performance / Accessibility / Best Practices) and confirm no CLS from the portrait.
-4. Keyboard-only pass: skip link works, all links/CTAs/toggle reachable with visible focus; verify contrast in both themes with a checker.
-5. `npm run typecheck` and `npm run lint` pass.
-6. Headshot is at `public/headshot.png` (user-provided, already in place).
+- Resume PDF (≤2 pages) — `public/resume.pdf`, linked from "View Resume" button
+- Vitest + RTL smoke tests

@@ -1,4 +1,4 @@
-export type { Profile, Social, Metric, Role, SkillGroup, Principle, GlobalRegion, NavItem } from './types';
+export type { Profile, Social, Metric, Role, SkillGroup, Principle, GlobalRegion, NavItem, Testimonial } from './types';
 export { profile } from './profile';
 export { overview } from './overview';
 export { principles } from './principles';
@@ -8,3 +8,4 @@ export { navItems } from './nav';
 export { metrics } from './metrics';
 export { skills } from './skills';
 export { experience } from './experience';
+export { testimonials } from './testimonials';

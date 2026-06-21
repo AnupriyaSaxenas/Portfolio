@@ -6,5 +6,6 @@ export { Skills } from './Skills';
 export { Metrics } from './Metrics';
 export { Experience } from './Experience';
 export { GlobalReach } from './GlobalReach';
+export { Testimonials } from './Testimonials';
 export { Contact } from './Contact';
 export { SiteFooter } from './SiteFooter';

@@ -9,6 +9,7 @@ import {
   // SiteFooter,
   SiteNav,
   Skills,
+  Testimonials,
 } from './components/sections';
 import { SkipLink } from './components/ui';
 
@@ -27,6 +28,7 @@ function App() {
         <Experience />
         <Skills />
         <GlobalReach />
+        <Testimonials />
         <Contact />
       </main>
       {/* <SiteFooter /> */}

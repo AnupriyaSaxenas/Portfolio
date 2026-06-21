@@ -50,3 +50,9 @@ export type NavItem = {
   label: string;
   href: string;
 };
+
+export type Testimonial = {
+  quote: string;
+  role: string;
+  company: string;
+};

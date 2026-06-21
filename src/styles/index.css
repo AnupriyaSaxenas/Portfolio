@@ -134,9 +134,20 @@ body {
   animation: fade-up-scale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
+/* ── Testimonial carousel fade ────────────────────── */
+@keyframes testimonial-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.testimonial-fade {
+  animation: testimonial-fade 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
 /* ── Reduced motion ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .blob-animate  { animation: none; }
-  .fade-up       { animation: none; opacity: 1; }
-  .fade-up-scale { animation: none; opacity: 1; }
+  .blob-animate     { animation: none; }
+  .fade-up          { animation: none; opacity: 1; }
+  .fade-up-scale    { animation: none; opacity: 1; }
+  .testimonial-fade { animation: none; opacity: 1; }
 }
