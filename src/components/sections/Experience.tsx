@@ -34,7 +34,7 @@ function RoleCard({ role }: { role: Role }) {
 
 export function Experience() {
   return (
-    <Section id="experience" labelledBy="experience-heading">
+    <Section id="experience" labelledBy="experience-heading" className="border-b border-border">
       <Container>
         <Reveal>
           <SectionHeader

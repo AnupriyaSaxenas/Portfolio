@@ -3,7 +3,7 @@ import { Card, Container, Reveal, Section, SectionHeader } from '../ui';
 
 export function GlobalReach() {
   return (
-    <Section id="global" labelledBy="global-heading">
+    <Section id="global" labelledBy="global-heading" className="border-b border-border">
       <Container>
         <Reveal>
           <SectionHeader

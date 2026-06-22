@@ -3,7 +3,7 @@ import { Container, Icon, Reveal, Section } from '../ui';
 
 export function Contact() {
   return (
-    <Section id="contact" labelledBy="contact-heading" className="bg-card">
+    <Section id="contact" labelledBy="contact-heading" className="bg-card border-b border-border">
       <Container>
         <Reveal>
           <p className="text-sm uppercase tracking-[0.2em] text-accent font-medium mb-4">

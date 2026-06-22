@@ -3,7 +3,7 @@ import { Avatar, Blobs, LinkButton } from '../ui';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden min-h-screen px-6 pt-16 pb-16 sm:pt-24 sm:pb-24 md:pt-44 md:pb-32">
+    <section className="relative overflow-hidden min-h-screen px-6 pt-16 pb-16 sm:pt-24 sm:pb-24 md:pt-44 md:pb-32 border-b border-border">
       <Blobs />
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-12">

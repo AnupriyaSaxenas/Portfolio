@@ -4,7 +4,7 @@ import { Card, Container, Icon, Reveal, Section, SectionHeader } from '../ui';
 
 export function Principles() {
   return (
-    <Section id="principles" labelledBy="principles-heading">
+    <Section id="principles" labelledBy="principles-heading" className="border-b border-border">
       <Container>
         <Reveal>
           <SectionHeader
