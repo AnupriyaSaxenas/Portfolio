@@ -3,7 +3,7 @@ import { testimonials } from '../../data';
 import { Card, Container, Reveal, Section, SectionHeader } from '../ui';
 
 const arrowClass =
-  'group w-14 self-stretch flex items-center justify-center rounded-xl text-muted hover:text-accent cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+  'group w-8 md:w-14 self-stretch flex items-center justify-center rounded-xl text-muted hover:text-accent cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 function ChevronLeft() {
   return (

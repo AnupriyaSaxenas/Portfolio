@@ -3,6 +3,12 @@ import type { Testimonial } from './types';
 export const testimonials: Testimonial[] = [
   {
     quote:
+      "Thank you for your consistent proactive contributions, strong ownership and outstanding leadership driving the development of container security. You always tackle issues and resolve conflicts with a positive mindset. Our collaboration has become increasingly seamless over time. In the past two quarters, the team's delivery workflow has turned far smoother and more efficient than before, largely thanks to your efforts. I really appreciate your continuous support and understanding throughout our work. Glad to have you support container security. Look forward to continuing our strong partnership.",
+    role: 'Director, Product Management',
+    company: 'TrendAI',
+  },
+  {
+    quote:
       "Working with Anu over the past year has been a genuine pleasure. Her leadership has been instrumental to our success with the V1CS deployment and maintenance in SAP. She and her team understand how critical it is to support our customers, and whether it's an emergency or an unscheduled meeting, she is always there to help. That dedication doesn't just satisfy customers, it empowers them to succeed with their projects. Her empathy is remarkable: she understands customers' challenges and works tirelessly to address them, making even the toughest cases easier for everyone involved, from our team to the customer. She bridges us to the right teams and works seamlessly with the accounts team to ensure success. Collaborating with Anu is productive, and genuinely fun.",
     role: 'Principal Customer Success Technical Advisor',
     company: 'TrendAI',
