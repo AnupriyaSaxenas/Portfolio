@@ -2,7 +2,7 @@ export type Profile = {
   name: string;
   title: string;
   tagline: string;
-  summary: string;
+  // summary: string;
   location: string;
   currentFocus: string;
   photo: { src: string; alt: string; width: number; height: number };
