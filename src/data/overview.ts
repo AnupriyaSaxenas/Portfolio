@@ -1,5 +1,5 @@
 export const overview: string[] = [
-  'I\'m an Engineering Manager with 10+ years of experience building and scaling modern, cloud-native products - from writing pixel-perfect frontend code to leading distributed teams across three continents. I care deeply about both the craft and the people.',
-  'At TrendAI, I\'ve built and grown a container security engineering team, shaped how we plan and execute across distributed sites and worked closely with other Trend Vision One platform teams to build and deliver integrated security capabilities that enterprise customers trust.',
-  'I believe great engineering leadership is about creating the conditions for your best engineers to do the best work of their careers - and then getting out of the way.',
+  'I\'m an Engineering Manager with 10+ years of experience building cloud-native products and high-performing engineering teams. I care deeply about both the craft of engineering and the people who make it happen.',
+  'At TrendAI, I\'ve built and grown a container security engineering team, shaped how distributed teams plan and execute, and partnered across the Trend Vision One platform to deliver integrated capabilities that enterprise customers trust. More recently, my scope has expanded to include AI Risk Insights.',
+  'I believe great engineering leadership is about creating the conditions for people to do their best work - with clarity, trust and ownership - and then giving them the space to do it.',
 ];
