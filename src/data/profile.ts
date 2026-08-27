@@ -4,7 +4,7 @@ export const profile: Profile = {
   name: 'Anupriya Saxena',
   title: 'Engineering Manager',
   tagline:
-    'Building and scaling cloud-native products with distributed engineering teams across Canada, the US, and Taiwan.',
+    'Building high-performing teams, cultures that stick, and people that thrive.',
   summary:
     'Engineering Manager with 10+ years of experience building and scaling modern, cloud-native products. Proven people leader known for building trust, driving consistent execution in high-stakes environments, and fostering healthy, engaged teams delivering meaningful customer outcomes.',
   location: 'Canada',
