@@ -22,8 +22,8 @@ function RoleCard({ role }: { role: Role }) {
       )}
       <ul className="space-y-2.5 max-w-3xl">
         {role.highlights.map((h, i) => (
-          <li key={i} className="text-muted leading-relaxed flex gap-3">
-            <span className="text-accent mt-1.5 shrink-0" aria-hidden="true">▸</span>
+          <li key={i} className="text-muted leading-relaxed flex items-baseline gap-3">
+            <span className="text-accent shrink-0" aria-hidden="true">▸</span>
             <span>{h}</span>
           </li>
         ))}
@@ -41,7 +41,7 @@ export function Experience() {
             id="experience-heading"
             eyebrow="Experience"
             heading="A decade of building, scaling, and leading."
-            subhead="From frontend engineering to managing distributed teams across three continents."
+            subhead="Growing high-performing teams, developing leaders, and creating environments where great work happens."
           />
         </Reveal>
         <div className="space-y-5">
