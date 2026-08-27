@@ -3,7 +3,7 @@ import type { Social } from './types';
 export const contact = {
   email: 'aspriyamail@gmail.com',
   hiringCta:
-    'I\'m open to senior engineering leadership roles where I can build high-performing teams, drive cloud-native product strategy, and create an environment where engineers do their best work.',
+    'I\'m exploring senior engineering leadership roles where I can build high-performing teams, shape cloud-native product strategy, and create an environment where engineers do their best work.',
 };
 
 export const socials: Social[] = [
