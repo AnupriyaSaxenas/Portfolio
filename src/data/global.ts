@@ -2,20 +2,20 @@ import type { GlobalRegion } from './types';
 
 export const globalReach = {
   headline: 'Leading across time zones.',
-  body: 'Leading distributed engineering teams across three countries has taught me that proximity isn\'t a prerequisite for alignment. It requires intention, async communication discipline, and a shared culture that transcends time zones. I\'ve built playbooks for cross-site planning, performance calibration, and knowledge sharing that work whether your team is in the same room or 13 hours apart.',
+  body: 'Great teams don\'t need to sit in the same room. They need clarity, trust, strong communication, and shared ownership. I\'ve built the operating practices that align distributed teams around a shared goal, enabling them to plan effectively, share knowledge, and execute together.',
 };
 
 export const regions: GlobalRegion[] = [
   {
     name: 'Canada',
-    context: 'Home base & leadership hub — TrendAI container security',
+    context: 'Core team',
   },
   {
     name: 'United States',
-    context: 'Distributed team coordination & enterprise customer delivery',
+    context: 'Engineering partner',
   },
   {
     name: 'Taiwan',
-    context: 'Cross-site engineering partnership — TrendAI R&D',
+    context: 'Engineering partner',
   },
 ];
