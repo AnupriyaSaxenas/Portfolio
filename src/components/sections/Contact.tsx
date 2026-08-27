@@ -16,7 +16,7 @@ export function Contact() {
             {contact.hiringCta}
           </p>
           <p className="text-lg text-muted leading-relaxed max-w-2xl mb-12">
-            Whether it's scaling a team, untangling a complex system, or shipping a product customers love — I'd love to hear what you're working on.
+            Whether it's building a team, untangling a complex system, or turning ambitious product ideas into reality, I'd love to hear what you're working on.
           </p>
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-fit">
