@@ -4,6 +4,7 @@ export type Profile = {
   tagline: string;
   summary: string;
   location: string;
+  currentFocus: string;
   photo: { src: string; alt: string; width: number; height: number };
   resumePdf: string;
 };
