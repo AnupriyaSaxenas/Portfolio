@@ -13,7 +13,7 @@ export function Hero() {
               style={{ animationDelay: '0.05s' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
-              {profile.location} · {profile.title}
+              {profile.title} · {profile.currentFocus}
             </p>
             <h1
               className="fade-up text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-fg mb-8"
