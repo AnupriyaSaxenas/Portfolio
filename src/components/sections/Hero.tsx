@@ -1,4 +1,4 @@
-import { contact, profile } from '../../data';
+import { profile } from '../../data';
 import { Avatar, Blobs, LinkButton } from '../ui';
 
 export function Hero() {
@@ -32,12 +32,12 @@ export function Hero() {
               style={{ animationDelay: '0.45s' }}
             >
               <LinkButton href="#contact">Get in touch</LinkButton>
-              <LinkButton
+              {/* <LinkButton
                 href={`mailto:${contact.email}`}
                 variant="secondary"
               >
                 Email me
-              </LinkButton>
+              </LinkButton> */}
             </div>
           </div>
           <div
