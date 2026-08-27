@@ -18,7 +18,7 @@ export function Metrics() {
             id="impact-heading"
             eyebrow="Impact"
             heading="Numbers that tell the story."
-            subhead="Outcomes from leading distributed teams, scaling cloud-native products, and shipping work that customers actually use."
+            subhead="Outcomes from building high-performing teams, improving engineering efficiency, and delivering products that drive customer growth."
           />
         </Reveal>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
